@@ -13,6 +13,8 @@ require('./models/Postagem')
 const Postagem =  mongoose.model('postagens')
 require('./models/Categoria')
 const Categoria = mongoose.model('categorias')
+const usuario = require('./routes/usuario')
+
 
 //config
 app.use(express.urlencoded({extended:true}))
@@ -123,6 +125,7 @@ app.get('/404',(req,res)=>{
 
 
 app.use('/admin', admin)
+app.use('/usuarios', usuario)
 
 //outros
 const PORT = 8081
