@@ -12,10 +12,14 @@ const Usuario = mongoose.model('usuarios')
 // Importa o bcryptjs para criptografar senhas
 const bcrypt = require('bcryptjs') 
 
+const passport = require('passport')
+
 // Rota GET para exibir o formulário de registro de usuário
 router.get('/registro', (req, res) => {
     res.render('usuarios/registro')
 })
+
+            //REGISTRO  
 
 // Rota POST para processar o registro de usuário
 router.post('/registro', (req, res) => {
@@ -87,11 +91,30 @@ router.post('/registro', (req, res) => {
         })
     }
 
-    // Rota GET para exibir o formulário de login
-    router.get('/login', (req, res) => {
-        res.render('usuarios/login')
-    })
 })
+
+
+            //LOGIN 
+
+// Rota GET para exibir o formulário de login
+router.get('/login', (req, res) => {
+    res.render('usuarios/login')
+})
+
+router.post("/login", (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect:"/",
+        failureRedirect: "/usuarios/login",
+        failureFlash: true
+    })(req,res,next)
+})
+
+
+
+
+
+
+
 
 // Exporta o roteador para ser usado em outros arquivos
 module.exports = router
