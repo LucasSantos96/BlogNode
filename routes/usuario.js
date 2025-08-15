@@ -13,6 +13,7 @@ const Usuario = mongoose.model('usuarios')
 const bcrypt = require('bcryptjs') 
 
 const passport = require('passport')
+const { eAdmin } = require('../helpers/eadmin')
 
 // Rota GET para exibir o formulário de registro de usuário
 router.get('/registro', (req, res) => {
@@ -59,7 +60,8 @@ router.post('/registro', (req, res) => {
                 const newUsuario = new Usuario({
                     nome: req.body.nome,
                     email: req.body.email,
-                    senha: req.body.senha
+                    senha: req.body.senha,
+                    
                 })
                 // Gera um salt para criptografar a senha
                 bcrypt.genSalt(10, (erro, salt) => {
@@ -110,6 +112,22 @@ router.post("/login", (req, res, next) => {
 })
 
 
+//Logout
+
+router.get('/logout',(req,res)=>{
+ req.logOut((err)=>{
+    if(err){
+        req.flash('error_msg', 'Houve um erro ao sair')
+        return res.redirect('/')
+    }
+    req.flash('success_msg',"Você saiu da conta")
+    res.redirect('/')
+ })
+ 
+ 
+ 
+
+})
 
 
 

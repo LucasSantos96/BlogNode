@@ -17,6 +17,8 @@ const usuario = require('./routes/usuario')
 const passport = require("passport")
 require('./config/auth')(passport)
 
+const db = require('./config/db')
+
 
 //config
 app.use(express.urlencoded({extended:true}))
@@ -63,7 +65,7 @@ app.use(express.json())
     app.set('view engine', 'handlebars')
 
     //Mongoose
-    mongoose.connect('mongodb://localhost/blogapp').then(()=>{
+    mongoose.connect( db.mongoURI ).then(()=>{
         console.log('banco conectado!')
     }).catch((err)=>{
         console.error('Erro ao conectar!'+ err)
@@ -140,7 +142,7 @@ app.use('/admin', admin)
 app.use('/usuarios', usuario)
 
 //outros
-const PORT = 8081
+const PORT = process.env.PORT ||8081
 app.listen(PORT, ()=>{
     console.log('Servidor roando!')
 })
