@@ -14,6 +14,7 @@ const bcrypt = require('bcryptjs')
 
 const passport = require('passport')
 const { eAdmin } = require('../helpers/eadmin')
+const eadmin = require('../helpers/eadmin')
 
 // Rota GET para exibir o formulário de registro de usuário
 router.get('/registro', (req, res) => {
@@ -61,6 +62,7 @@ router.post('/registro', (req, res) => {
                     nome: req.body.nome,
                     email: req.body.email,
                     senha: req.body.senha,
+                    eAdmin: req.body.email === process.env.ADMIN_EMAIL ? 1 : 0
                     
                 })
                 // Gera um salt para criptografar a senha
